@@ -22,7 +22,7 @@ jobs:
     steps:
     - name: Show kubeconfig
       run: |
-        echo ${{ secrets.ACTIONS_DEV_KUBECONFIG }}
+        echo "${{ secrets.ACTIONS_DEV_KUBECONFIG }}"
     - name: Get deployments
       uses: actions-hub/kubectl@v1.27.3
       env:
