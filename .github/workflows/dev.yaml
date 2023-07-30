@@ -21,10 +21,10 @@ jobs:
     needs: [unit-tests]
     container:
       image: curlimages/curl
-      options: --user root --add-host=host.docker.internal:host-gateway
+      options: --user root
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
     - name: Check if kube-apiserver is reachable
       run: |
-        curl -k http://host.docker.internal:45457/
+        curl -k https://172.17.0.1:45457/
