@@ -19,12 +19,18 @@ jobs:
   deploy-to-dev:
     runs-on: self-hosted
     needs: [unit-tests]
+    container:
+      image: ubuntu:22.04
     steps:
-    - name: View config
-      uses: actions-hub/kubectl@v1.27.3
-      env:
-        KUBE_HOST: ${{ secrets.KUBE_HOST }}
-        KUBE_CERTIFICATE: ${{ secrets.KUBE_CERTIFICATE }}
-        KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-      with:
-        args: config view --raw
+    - name: Install dependencies
+      run: |
+        apt-get update && apt-get install -y wget
+        wget -qO "/usr/local/bin/kubectl" https://dl.k8s.io/release/v1.27.3/bin/linux/amd64/kubectl
+        chmod +x "/usr/local/bin/kubectl"
+        kubectl config set-cluster kind-actions-kind --server=https://172.17.0.1:6443/ --insecure-skip-tls-verify=true
+        kubectl config set-credentials actions-dev --token="${{ secrets.KUBE_TOKEN }}"
+        kubectl config set-context actions-dev --user=actions-dev --cluster=kind-actions-kind --namespace=dev
+        kubectl config use-context actions-dev
+    - name: Get deployments
+      run: |
+        kubectl get deploy
