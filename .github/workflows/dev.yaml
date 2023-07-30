@@ -23,7 +23,7 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v3
     - name: Get deployments
-      uses: actions-hub/kubectl@1.27.3
+      uses: actions-hub/kubectl@v1.27.3
       env:
         KUBE_CONFIG: ${{ secrets.ACTIONS_DEV_KUBECONFIG }}
       with:
