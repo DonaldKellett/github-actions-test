@@ -20,9 +20,11 @@ jobs:
     runs-on: self-hosted
     needs: [unit-tests]
     steps:
-    - name: Get deployments
+    - name: View config
       uses: actions-hub/kubectl@v1.27.3
       env:
-        KUBE_CONFIG: ${{ secrets.ACTIONS_DEV_KUBECONFIG }}
+        KUBE_HOST: ${{ secrets.KUBE_HOST }}
+        KUBE_CERTIFICATE: ${{ secrets.KUBE_CERTIFICATE }}
+        KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
       with:
-        args: get deploy
+        args: config view --raw
