@@ -20,9 +20,6 @@ jobs:
     runs-on: self-hosted
     needs: [unit-tests]
     steps:
-    - name: Show kubeconfig
-      run: |
-        echo "${{ secrets.ACTIONS_DEV_KUBECONFIG }}"
     - name: Get deployments
       uses: actions-hub/kubectl@v1.27.3
       env:
