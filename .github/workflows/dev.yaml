@@ -33,5 +33,5 @@ jobs:
         kubectl config set-credentials actions-dev --token="${KUBE_TOKEN}"
         kubectl config set-context actions-dev --user=actions-dev --cluster=kind-actions-kind --namespace=dev
         kubectl config use-context actions-dev
-        kubectl view config
+        kubectl config view
         kubectl get deploy
