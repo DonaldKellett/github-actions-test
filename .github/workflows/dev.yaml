@@ -19,12 +19,12 @@ jobs:
   deploy-to-dev:
     runs-on: self-hosted
     needs: [unit-tests]
-    container:
-      image: curlimages/curl
-      options: --user root
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
-    - name: Check if kube-apiserver is reachable
-      run: |
-        curl -k https://172.17.0.1:6443/
+    - name: Get deployments
+      uses: actions-hub/kubectl@1.27.3
+      env:
+        KUBE_CONFIG: ${{ secrets.ACTIONS_DEV_KUBECONFIG }}
+      with:
+        args: get deploy
