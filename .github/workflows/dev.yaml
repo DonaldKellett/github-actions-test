@@ -19,8 +19,6 @@ jobs:
   image-build:
     runs-on: self-hosted
     needs: [unit-tests]
-    container:
-      image: ubuntu:22.04
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
